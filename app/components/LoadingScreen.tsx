@@ -8,43 +8,93 @@ interface LoadingScreenProps {
   onComplete: () => void
 }
 
+const UFO_WIDTH = 64; // Corresponds to w-16
+const UFO_HEIGHT = 32; // Corresponds to h-8 (main body)
+
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const screenRef = useRef<HTMLDivElement>(null)
+  const ufoRef = useRef<HTMLDivElement>(null)
   const [showUFO, setShowUFO] = useState(false)
-  const [showLaser, setShowLaser] = useState(false)
-  const [breakScreen, setBreakScreen] = useState(false)
+  const [initiateShatter, setInitiateShatter] = useState(false)
+  const [fragments, setFragments] = useState<JSX.Element[]>([])
 
   useEffect(() => {
-    const timer1 = setTimeout(() => {
+    // Show UFO after a short delay
+    const ufoAppearTimer = setTimeout(() => {
       setShowUFO(true)
-    }, 3000)
-
-    const timer2 = setTimeout(() => {
-      setBreakScreen(true)
-
-      if (screenRef.current) {
-        const pieces = Array.from(document.querySelectorAll('.loading-glass-piece'))
-
-        gsap.to(pieces, {
-          y: '+=100vh',
-          x: (i) => (i % 2 === 0 ? '-=100' : '+=100'),
-          rotation: (i) => (i % 2 === 0 ? -45 : 45),
-          opacity: 0,
-          duration: 1.5,
-          ease: 'power2.in',
-          stagger: 0.05,
-          onComplete: () => {
-            onComplete()
-          }
-        })
-      }
-    }, 4500)
+    }, 500) // UFO appears sooner
 
     return () => {
-      clearTimeout(timer1)
-      clearTimeout(timer2)
+      clearTimeout(ufoAppearTimer)
     }
-  }, [onComplete])
+  }, [])
+
+  const handleUFOAnimationComplete = () => {
+    // UFO has reached the center, trigger shatter
+    setInitiateShatter(true)
+  }
+
+  useEffect(() => {
+    if (initiateShatter && screenRef.current) {
+      // Hide original content that should not be part of fragments
+      const ufoElement = ufoRef.current;
+      const logoElement = screenRef.current.querySelector('.loading-dm-logo');
+      if (ufoElement) ufoElement.style.display = 'none';
+      if (logoElement) (logoElement as HTMLElement).style.display = 'none';
+
+      const screenRect = screenRef.current.getBoundingClientRect()
+      const numFragments = 75; // Number of fragments
+      const fragmentSize = Math.sqrt((screenRect.width * screenRect.height) / numFragments) / 2;
+      const newFragments: JSX.Element[] = []
+      const fragmentElements: HTMLDivElement[] = []
+
+      for (let i = 0; i < numFragments; i++) {
+        const x = Math.random() * screenRect.width;
+        const y = Math.random() * screenRect.height;
+        const id = `fragment-${i}`;
+        
+        // Create div element to be animated by GSAP
+        const fragDiv = document.createElement('div');
+        fragDiv.id = id;
+        fragDiv.className = 'loading-fragment'; // Add a class for potential base styling
+        fragDiv.style.position = 'absolute';
+        fragDiv.style.left = `${x - fragmentSize / 2}px`;
+        fragDiv.style.top = `${y - fragmentSize / 2}px`;
+        fragDiv.style.width = `${fragmentSize + Math.random() * fragmentSize}px`;
+        fragDiv.style.height = `${fragmentSize + Math.random() * fragmentSize}px`;
+        // Inherit background from .loading-vhs-bg by not setting one, or set parts of it
+        // For simplicity, let's give them a color that fits the theme or make them transparent to show bg
+        // To make them appear as part of the screen, they should ideally sample the background
+        // A simpler approach: make them dark, or use a repeating gradient similar to the screen
+        fragDiv.style.background = `hsl(${Math.random() * 50 + 260}, 100%, ${10 + Math.random() * 15}%)`; // Dark purples/blues
+        fragDiv.style.opacity = '1';
+        screenRef.current?.appendChild(fragDiv);
+        fragmentElements.push(fragDiv);
+      }
+
+      // Animate fragments with GSAP
+      gsap.to(fragmentElements, {
+        x: () => `+=${(Math.random() - 0.5) * (window.innerWidth * 0.3)}`,
+        y: () => `+=${window.innerHeight * 0.8 + Math.random() * (window.innerHeight * 0.5)}`,
+        rotation: () => (Math.random() - 0.5) * 720,
+        opacity: 0,
+        duration: 1.5 + Math.random() * 1.5,
+        ease: 'power2.in',
+        stagger: {
+          each: 0.005,
+          from: "center" // fragments near center start first
+        },
+        onComplete: () => {
+          // Cleanup: remove fragment divs from DOM
+          fragmentElements.forEach(frag => frag.remove());
+          if (onComplete) {
+            onComplete()
+          }
+        }
+      })
+    }
+  }, [initiateShatter, onComplete])
+
 
   // Generar líneas horizontales para el sol
   const sunLines = Array.from({ length: 8 }).map((_, index) => (
@@ -54,18 +104,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       style={{ bottom: `${index * (100 / 8)}%` }}
     />
   ))
-
-  // Crear palmeras con hojas
-  const createPalmTree = (key: string) => (
-    <div key={key} className="loading-palm-tree">
-      <div className="loading-palm-trunk" />
-      <div className="loading-palm-leaves">
-        {Array.from({ length: 10 }).map((_, leafIndex) => (
-          <div key={`leaf-${leafIndex}`} className="loading-palm-leaf" />
-        ))}
-      </div>
-    </div>
-  )
 
   return (
     <AnimatePresence>
@@ -79,14 +117,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             {sunLines}
           </div>
 
-          {/* Palmeras */}
-          <div className="loading-palm-trees">
-            {createPalmTree('palm-1')}
-            {createPalmTree('palm-2')}
-            {createPalmTree('palm-3')}
-            {createPalmTree('palm-4')}
-          </div>
-
           <div className="loading-scanlines" />
           <div className="loading-noise" />
         </div>
@@ -94,14 +124,19 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         <div className="loading-content-container">
           <div className="loading-dm-logo loading-glitch-text" data-text="DXM">DXM</div>
 
-          {/* UFO */}
-          {showUFO && (
+          {/* UFO - Will be controlled by initiateShatter to hide before fragments appear */}
+          {/* The UFO itself is hidden by direct DOM manipulation before fragments are created */} 
+          {showUFO && !initiateShatter && (
             <motion.div
-              className="absolute top-1/3 z-20"
-              initial={{ x: -200, y: 50 }}
-              animate={{ x: '50vw', y: 20 }}
-              exit={{ x: '100vw', y: -50 }}
-              transition={{ duration: 2, ease: "easeInOut" }}
+              ref={ufoRef} // Add ref to UFO for direct manipulation
+              className="absolute z-20" // Positioning will be handled by initial/animate
+              initial={{ x: '-100vw', y: `calc(50vh - ${UFO_HEIGHT / 2}px)` }} // Start off-screen left, vertically centered
+              animate={{
+                x: `calc(50vw - ${UFO_WIDTH / 2}px)`, // Target center screen X
+                y: `calc(50vh - ${UFO_HEIGHT / 2}px)`  // Target center screen Y
+              }}
+              transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }} // Slightly faster, custom ease for impact feel
+              onAnimationComplete={handleUFOAnimationComplete} // Trigger shatter on arrival
             >
               <div className="relative">
                 {/* Cuerpo del UFO */}
@@ -146,16 +181,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             </motion.div>
           )}
         </div>
-
-        {breakScreen && (
-          <div className="loading-glass-overlay">
-            {Array.from({ length: 12 }).map((_, index) => (
-              <div key={index} className="loading-glass-piece" style={{
-                clipPath: `polygon(${Math.random() * 100}% ${Math.random() * 100}%, ${Math.random() * 100}% ${Math.random() * 100}%, ${Math.random() * 100}% ${Math.random() * 100}%)`
-              }} />
-            ))}
-          </div>
-        )}
+        {/* Fragments will be appended here by GSAP directly into screenRef if initiateShatter is true */}
       </motion.div>
     </AnimatePresence>
   )

@@ -5,10 +5,10 @@ Una Single Page Application desarrollada en Next.js con estética retrofuturista
 ## ✨ Características
 
 ### 🎬 Pantalla de Carga Épica
-- Fondo animado estilo retro futuristic 80s VHS tape
-- Letras "DXM" con tipografía de graffiti y efectos VHS glitch
-- Animación de UFO en 8-bit que vuela y parte la pantalla
-- Efecto de pantalla rota como vidrio que cae
+- Fondo Synthwave con perspectiva 3D y efectos VHS
+- Líneas solares animadas con gradientes
+- Letras "DM" con efecto glitch y animación neón
+- UFO pixelado con luces intermitentes que choca con la pantalla, rompiéndola en fragmentos que caen y desaparecen
 
 ### 🎨 Diseño Moderno
 - Layout Bento con cajas organizadas
@@ -23,7 +23,8 @@ Una Single Page Application desarrollada en Next.js con estética retrofuturista
 - **TypeScript** para tipado estático
 - **Tailwind CSS** para estilos utilitarios
 - **Framer Motion** para animaciones fluidas
-- **Lucide React** para iconos
+- GSAP para animaciones avanzadas
+- Lucide React para iconos
 
 ## 🚀 Instalación y Uso
 
@@ -131,6 +132,12 @@ Sistema de temas con:
 - Persistencia en localStorage
 - Transiciones suaves
 - Toggle siempre visible
+
+### TechSlider
+Slider de tecnologías con:
+- Logos de las tecnologías
+- Animación de loop infinito y continuo
+- Efectos de hover mejorados con rotación y escala
 
 ## 🔧 Personalización
 

@@ -120,7 +120,7 @@ export default function Home() {
                 }}
                 transition={{ duration: 5, repeat: Infinity }}
               >
-                Portafolio Digital
+                Portafolio DXM
               </motion.h1>
               <motion.p
                 className="text-xl text-gray-300 dark:text-gray-300 light:text-gray-600 max-w-2xl mx-auto"

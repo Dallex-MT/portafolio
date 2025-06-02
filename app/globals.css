@@ -205,85 +205,7 @@
   }
 }
 
-  /* Palmeras y efectos del LoadingScreen */
-  .loading-palm-trees {
-    position: absolute;
-    bottom: 40%;
-    left: 0;
-    width: 100%;
-    height: 200px;
-    z-index: 4;
-  }
 
-  .loading-palm-tree {
-    position: absolute;
-    bottom: 0;
-    filter: drop-shadow(0 0 10px #ff00ff);
-  }
-
-  .loading-palm-tree:nth-child(1) {
-    left: 15%;
-    width: 120px;
-    height: 180px;
-  }
-
-  .loading-palm-tree:nth-child(2) {
-    left: 25%;
-    width: 80px;
-    height: 120px;
-  }
-
-  .loading-palm-tree:nth-child(3) {
-    right: 25%;
-    width: 80px;
-    height: 120px;
-  }
-
-  .loading-palm-tree:nth-child(4) {
-    right: 15%;
-    width: 120px;
-    height: 180px;
-  }
-
-  .loading-palm-trunk {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 8px;
-    height: 60%;
-    background: linear-gradient(to right, #4a0060, #6600aa, #4a0060);
-    border-radius: 4px;
-  }
-
-  .loading-palm-leaves {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    height: 50%;
-  }
-
-  .loading-palm-leaf {
-    position: absolute;
-    width: 60px;
-    height: 4px;
-    background: linear-gradient(to right, #ff00ff, #aa00ff);
-    border-radius: 2px;
-    transform-origin: 0 50%;
-  }
-
-  .loading-palm-leaf:nth-child(1) { transform: rotate(-60deg) translateX(20px); top: 10px; left: 50%; }
-  .loading-palm-leaf:nth-child(2) { transform: rotate(-30deg) translateX(25px); top: 5px; left: 50%; }
-  .loading-palm-leaf:nth-child(3) { transform: rotate(0deg) translateX(30px); top: 0; left: 50%; }
-  .loading-palm-leaf:nth-child(4) { transform: rotate(30deg) translateX(25px); top: 5px; left: 50%; }
-  .loading-palm-leaf:nth-child(5) { transform: rotate(60deg) translateX(20px); top: 10px; left: 50%; }
-  .loading-palm-leaf:nth-child(6) { transform: rotate(-120deg) translateX(20px); top: 10px; left: 50%; }
-  .loading-palm-leaf:nth-child(7) { transform: rotate(-150deg) translateX(25px); top: 5px; left: 50%; }
-  .loading-palm-leaf:nth-child(8) { transform: rotate(180deg) translateX(30px); top: 0; left: 50%; }
-  .loading-palm-leaf:nth-child(9) { transform: rotate(150deg) translateX(25px); top: 5px; left: 50%; }
-  .loading-palm-leaf:nth-child(10) { transform: rotate(120deg) translateX(20px); top: 10px; left: 50%; }
 
   /* Efectos VHS y ruido */
   .loading-scanlines {
@@ -402,25 +324,13 @@
     animation: loading-glitch-effect 2s infinite steps(2, end) reverse;
   }
 
-  /* Efecto de vidrio roto */
-  .loading-glass-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 14;
-    pointer-events: none;
-  }
-
-  .loading-glass-piece {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(1px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transform-origin: center;
+  /* Estilos para los fragmentos de pantalla */
+  .loading-fragment {
+    /* Base styles for fragments if needed, though most are set inline via JS */
+    /* For example, if you want a consistent border or a subtle texture */
+    /* border: 1px solid rgba(255, 255, 255, 0.1); */
+    /* box-shadow: inset 0 0 5px rgba(0,0,0,0.5); */
+    /* The background is set dynamically in JS to mimic parts of the screen */
   }
 
   /* Animaciones específicas del LoadingScreen */
@@ -496,6 +406,95 @@
   background: linear-gradient(90deg, transparent, #00ffff, transparent);
   animation: scan-line 2s linear infinite;
   z-index: 10;
+}
+
+/* Estilos del Logo Slider */
+.sliderContainer {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 40px 0;
+  background: transparent;
+}
+
+.sliderTrack {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: 60px;
+  padding: 0 30px;
+}
+
+.logoItem {
+  flex-shrink: 0;
+}
+
+.logoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  padding: 10px;
+}
+
+.logoWrapper:hover {
+  transform: translateY(-8px) rotate(-7deg) scale(1.2);
+}
+
+.logo {
+  height: 45px;
+  width: auto;
+  filter: grayscale(100%) brightness(1.2);
+  transition: all 0.5s ease;
+  margin-bottom: 10px;
+}
+
+.logoWrapper:hover .logo {
+  filter: grayscale(0%) brightness(1);
+  transform: scale(1.15);
+}
+
+.logoName {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  transition: all 0.5s ease;
+  font-weight: 500;
+}
+
+.logoWrapper:hover .logoName {
+  opacity: 1;
+  color: var(--glow-color, #00ffff);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.logoWrapper::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: radial-gradient(circle, rgba(0, 255, 255, 0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: all 0.5s ease;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(10px);
+}
+
+.logoWrapper:hover::after {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    height: 35px;
+  }
+  
+  .sliderTrack {
+    gap: 40px;
+  }
 }
 
 /* Dark mode styles */
