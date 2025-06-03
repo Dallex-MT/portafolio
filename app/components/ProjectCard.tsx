@@ -61,7 +61,7 @@ export default function ProjectCard({
         )}
 
         {/* Título */}
-        <h3 className="text-xl font-cyber font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
+        <h3 className="text-xl playball-title font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
           {title}
         </h3>
 

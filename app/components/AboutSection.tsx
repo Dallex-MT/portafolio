@@ -34,7 +34,7 @@ export default function AboutSection() {
         {/* Avatar y título */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8">
           <motion.div
-            className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-cyan-500 flex items-center justify-center text-4xl font-bold text-white"
+            className="w-24 h-24 rounded-full bg-gradient-to-br playball-title from-purple-500 to-cyan-500 flex items-center justify-center text-4xl font-bold text-white"
             whileHover={{ scale: 1.1, rotate: 5 }}
             animate={{
               boxShadow: [
@@ -50,7 +50,7 @@ export default function AboutSection() {
           
           <div className="text-center md:text-left">
             <motion.h2
-              className="text-3xl md:text-4xl font-cyber font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400"
+              className="text-3xl md:text-4xl playball-title font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}

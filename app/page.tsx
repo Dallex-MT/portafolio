@@ -52,6 +52,52 @@ const projects = [
   }
 ]
 
+const TypewriterEffect = ({ messages }: { messages: string[] }) => {
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [showCursor, setShowCursor] = useState(true);
+  
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    let cursorInterval: NodeJS.Timeout;
+
+    const animateText = () => {
+      const currentMessage = messages[currentMessageIndex];
+      const shouldType = !isDeleting && displayText.length < currentMessage.length;
+      const shouldDelete = isDeleting && displayText.length > 0;
+      
+      if (shouldType) {
+        setDisplayText(currentMessage.slice(0, displayText.length + 1));
+        timeout = setTimeout(animateText, 100);
+      } else if (shouldDelete) {
+        setDisplayText(displayText.slice(0, -1));
+        timeout = setTimeout(animateText, 50);
+      } else if (!isDeleting && displayText === currentMessage) {
+        timeout = setTimeout(() => setIsDeleting(true), 2000);
+      } else if (isDeleting && displayText === '') {
+        setIsDeleting(false);
+        setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
+        timeout = setTimeout(animateText, 500);
+      }
+    };
+    
+    const toggleCursor = () => {
+      setShowCursor((prev) => !prev);
+    };
+
+    timeout = setTimeout(animateText, 100);
+    cursorInterval = setInterval(toggleCursor, 500);
+    
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(cursorInterval);
+    };
+  }, [displayText, isDeleting, currentMessageIndex, messages]);
+  
+  return <span>{displayText}<span className={showCursor ? 'blinking-cursor' : ''}>|</span></span>;
+};
+
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
   const [showContent, setShowContent] = useState(false)
@@ -114,21 +160,31 @@ export default function Home() {
           >
             <div className="text-center mb-8">
               <motion.h1
-                className="text-4xl md:text-6xl lg:text-7xl font-cyber font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400"
+                className="neonderthaw-title"
                 animate={{
-                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                  scale: [1, 1.05, 1],
                 }}
                 transition={{ duration: 5, repeat: Infinity }}
               >
                 Portafolio DXM
               </motion.h1>
               <motion.p
-                className="text-xl text-gray-300 dark:text-gray-300 light:text-gray-600 max-w-2xl mx-auto"
+                className="text-xl text-gray-300 dark:text-gray-300 light:text-gray-600 max-w-2xl mx-auto mt-2"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               >
-                Experiencias web que trascienden lo convencional
+                {showContent && (
+                  <TypewriterEffect
+                    messages={[
+                      "Experiencias web que trascienden lo convencional",
+                      "Diseño y desarrollo de experiencias digitales únicas",
+                      "Creando el futuro de la web, hoy",
+                      "Innovación y creatividad en cada proyecto",
+                      "Transformando ideas en experiencias interactivas"
+                    ]}
+                  />
+                )}
               </motion.p>
             </div>
             
@@ -185,7 +241,7 @@ export default function Home() {
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
               >
-                © 2024 DXM Portfolio. Diseñado con 💜 y mucho café.
+                © 2025 DXM Portfolio. Diseñado con 💜 y mucho café.
               </motion.p>
             </div>
           </motion.footer>

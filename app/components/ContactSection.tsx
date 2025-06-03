@@ -12,10 +12,10 @@ export default function ContactSection() {
   })
 
   const socialLinks = [
-    { icon: Github, href: '#', label: 'GitHub', color: '#333' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn', color: '#0077B5' },
-    { icon: Twitter, href: '#', label: 'Twitter', color: '#1DA1F2' },
-    { icon: Mail, href: 'mailto:contact@example.com', label: 'Email', color: '#EA4335' },
+    { icon: Github, href: 'https://github.com/Dallex-MT', label: 'GitHub', color: '#fff' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/dallin-miranda-877643258', label: 'LinkedIn', color: '#0077B5' },
+    { icon: Twitter, href: 'https://x.com/DXM_Dev', label: 'X', color: '#1DA1F2' },
+    { icon: Mail, href: 'mailto:dxmiranda.dev@gmail.com', label: 'Email', color: '#EA4335' },
   ]
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -54,7 +54,7 @@ export default function ContactSection() {
       <div className="relative z-10">
         {/* Título */}
         <motion.h2
-          className="text-2xl md:text-3xl font-cyber font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400"
+          className="text-2xl md:text-3xl playball-title font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-cyan-400"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -63,7 +63,7 @@ export default function ContactSection() {
         </motion.h2>
 
         {/* Redes sociales */}
-        <div className="flex flex-wrap gap-4 mb-8">
+        <div className="flex flex-wrap gap-4 mb-8 justify-center">
           {socialLinks.map((social, index) => {
             const Icon = social.icon
             return (

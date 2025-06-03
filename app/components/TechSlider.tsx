@@ -4,13 +4,13 @@ import { useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const technologies = [
-  { name: 'Next.js', logo: '/next.svg' },
-  { name: 'React', logo: '/react-logo.svg' },
-  { name: 'Tailwind CSS', logo: '/tailwind-logo.svg' },
-  { name: 'TypeScript', logo: '/typescript-logo.svg' },
-  { name: 'Framer Motion', logo: '/framer-logo.svg' },
-  { name: 'GSAP', logo: '/gsap-logo.svg' },
-  { name: 'Three.js', logo: '/threejs-logo.svg' },
+  { name: 'Next.js', logo: '/images/next.svg' },
+  { name: 'React', logo: '/images/react-logo.svg' },
+  { name: 'Tailwind CSS', logo: '/images/tailwind-logo.svg' },
+  { name: 'TypeScript', logo: '/images/typescript-logo.svg' },
+  { name: 'Framer Motion', logo: '/images/framer-logo.svg' },
+  { name: 'GSAP', logo: '/images/gsap-logo.svg' },
+  { name: 'Three.js', logo: '/images/threejs-logo.svg' },
 ];
 
 export default function TechSlider() {
