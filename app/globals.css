@@ -14,7 +14,7 @@
 @layer base {
   body {
     @apply bg-background text-foreground;
-    font-family: 'FantasqueSansMono', system-ui, sans-serif;
+    font-family: 'FantasqueSansMono', system-ui, sans-serif !important;
   }
 }
 

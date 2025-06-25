@@ -25,6 +25,7 @@ module.exports = {
       fontFamily: {
         'graffiti': ['Impact', 'Arial Black', 'sans-serif'],
         'cyber': ['Orbitron', 'monospace'],
+        'body' : ['FantasqueSansMono', 'system-ui', 'sans-serif']
       },
       animation: {
         'glitch': 'glitch 0.3s infinite',

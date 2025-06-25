@@ -6,7 +6,7 @@ import { FileDown } from 'lucide-react'
 export default function ResumeSection() {
   return (
     <motion.div
-      className="neon-border rounded-xl p-4 glass-morphism group hover:bg-white/20 transition-all duration-300 relative overflow-hidden flex flex-col justify-center items-center h-full"
+      className="neon-border rounded-xl p-4 glass-morphism h-full group hover:bg-white/20 transition-all duration-300 relative overflow-hidden flex flex-col justify-center items-center h-full"
       whileHover={{ 
         scale: 1.02,
         boxShadow: '0 0 40px rgba(255, 0, 255, 0.3), 0 0 60px rgba(0, 255, 255, 0.2)'
