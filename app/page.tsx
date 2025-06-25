@@ -8,47 +8,34 @@ import TechSlider from './components/TechSlider'
 import ProjectCard from './components/ProjectCard'
 import AboutSection from './components/AboutSection'
 import ContactSection from './components/ContactSection'
+import ResumeSection from './components/ResumeSection'
+import ProfileCard from './components/ProfileCard'
+import ImageSlider from './components/ImageSlider'
 
 const projects = [
   {
-    title: "E-commerce Futurista",
-    description: "Plataforma de comercio electrónico con diseño cyberpunk, animaciones fluidas y experiencia de usuario inmersiva.",
-    technologies: ["Next.js", "TypeScript", "Tailwind", "Framer Motion"],
+    title: "Acroware",
+    description: "Es un sistema de gestión de inventarios diseñado específicamente para instituciones educativas y empresas que necesitan llevar un control detallado de sus activos.",
+    technologies: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap", "MySQL"],
     size: "large" as const,
-    demoUrl: "#",
-    githubUrl: "#"
+    images: ["/images/projects/acroware/1.webp", "/images/projects/acroware/2.webp", "/images/projects/acroware/3.webp", "/images/projects/acroware/4.webp"],
+    githubUrl: "https://github.com/Dallex-MT/GestionInventarios.git"
   },
   {
-    title: "Dashboard Analytics",
-    description: "Panel de control con visualizaciones de datos en tiempo real y efectos holográficos.",
-    technologies: ["React", "D3.js", "WebGL"],
-    size: "medium" as const,
-    demoUrl: "#",
-    githubUrl: "#"
+    title: "Cervecería INTI",
+    description: "Es una plataforma web completa para una cervecería artesanal que permite explorar la variedad de productos de la cervecería e integra funcionalidades de e-commerce.",
+    technologies: ["PHP", "HTML", "CSS", "JavaScript", "MySQL"],
+    size: "large" as const,
+    images: ["/images/projects/inti/1.webp", "/images/projects/inti/2.webp", "/images/projects/int/3.webp", "/images/projects/inti/4.webp", "/images/projects/inti/5.webp"],
+    githubUrl: "https://github.com/Dallex-MT/Inti.git"
   },
   {
-    title: "App Móvil AR",
-    description: "Aplicación de realidad aumentada con interfaz retrofuturista.",
-    technologies: ["React Native", "AR.js", "Three.js"],
-    size: "small" as const,
-    demoUrl: "#",
-    githubUrl: "#"
-  },
-  {
-    title: "Portfolio 3D",
-    description: "Sitio web interactivo con elementos 3D y navegación espacial.",
-    technologies: ["Three.js", "GSAP", "WebGL"],
-    size: "medium" as const,
-    demoUrl: "#",
-    githubUrl: "#"
-  },
-  {
-    title: "Game Interface",
-    description: "Interfaz de usuario para videojuego con estética retro-futurista.",
-    technologies: ["Vue.js", "Canvas API", "CSS3"],
-    size: "small" as const,
-    demoUrl: "#",
-    githubUrl: "#"
+    title: "UrbanStep",
+    description: "Es una plataforma de comercio electrónico completa desarrollada con PHP que permite a las empresas gestionar su inventario y vender productos en línea.",
+    technologies: ["PHP", "HTML", "CSS", "JavaScript", "MySQL"],
+    size: "large" as const,
+    images: ["/images/projects/mp/1.webp", "/images/projects/mp/2.webp", "/images/projects/mp/3.webp", "/images/projects/mp/4.webp", "/images/projects/mp/5.webp"],
+    githubUrl: "https://github.com/Dallex-MT/mp-p1.git"
   }
 ]
 
@@ -57,7 +44,7 @@ const TypewriterEffect = ({ messages }: { messages: string[] }) => {
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
-  
+
   useEffect(() => {
     let timeout: NodeJS.Timeout;
     let cursorInterval: NodeJS.Timeout;
@@ -66,7 +53,7 @@ const TypewriterEffect = ({ messages }: { messages: string[] }) => {
       const currentMessage = messages[currentMessageIndex];
       const shouldType = !isDeleting && displayText.length < currentMessage.length;
       const shouldDelete = isDeleting && displayText.length > 0;
-      
+
       if (shouldType) {
         setDisplayText(currentMessage.slice(0, displayText.length + 1));
         timeout = setTimeout(animateText, 100);
@@ -81,68 +68,67 @@ const TypewriterEffect = ({ messages }: { messages: string[] }) => {
         timeout = setTimeout(animateText, 500);
       }
     };
-    
+
     const toggleCursor = () => {
       setShowCursor((prev) => !prev);
     };
 
     timeout = setTimeout(animateText, 100);
     cursorInterval = setInterval(toggleCursor, 500);
-    
+
     return () => {
       clearTimeout(timeout);
       clearInterval(cursorInterval);
     };
   }, [displayText, isDeleting, currentMessageIndex, messages]);
-  
+
   return <span>{displayText}<span className={showCursor ? 'blinking-cursor' : ''}>|</span></span>;
 };
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
   const [showContent, setShowContent] = useState(false)
+  const [sliderImages, setSliderImages] = useState<string[] | null>(null)
 
   const handleLoadingComplete = () => {
     setIsLoading(false)
-    setTimeout(() => {
-      setShowContent(true)
-    }, 500)
+    setTimeout(() => setShowContent(true), 500)
   }
 
   return (
     <main className="min-h-screen relative overflow-x-hidden dark:cosmic-glow">
       {/* Fondo dinámico basado en el tema */}
       <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-indigo-900 via-purple-900 to-pink-900 dark:from-gray-950 dark:via-indigo-950 dark:to-purple-950" />
-      
+
       {/* Efectos de partículas espaciales solo en modo oscuro */}
-       <div className="fixed inset-0 dark:opacity-100 opacity-0 transition-opacity duration-500">
-         {[...Array(80)].map((_, i) => {
-           const size = Math.random() > 0.8 ? 'w-1.5 h-1.5' : Math.random() > 0.6 ? 'w-1 h-1' : 'w-0.5 h-0.5';
-           const brightness = Math.random() > 0.7 ? 'bg-blue-200' : Math.random() > 0.5 ? 'bg-purple-200' : 'bg-white';
-           return (
-             <div
-               key={i}
-               className={`absolute ${size} ${brightness} rounded-full animate-pulse`}
-               style={{
-                 left: `${Math.random() * 100}%`,
-                 top: `${Math.random() * 100}%`,
-                 animationDelay: `${Math.random() * 5}s`,
-                 animationDuration: `${1.5 + Math.random() * 4}s`,
-                 opacity: 0.3 + Math.random() * 0.7,
-               }}
-             />
-           );
-         })}
-       </div>
+      <div className="fixed inset-0 dark:opacity-100 opacity-0 transition-opacity duration-500">
+        {[...Array(80)].map((_, i) => {
+          const size = Math.random() > 0.8 ? 'w-1.5 h-1.5' : Math.random() > 0.6 ? 'w-1 h-1' : 'w-0.5 h-0.5';
+          const brightness = Math.random() > 0.7 ? 'bg-blue-200' : Math.random() > 0.5 ? 'bg-purple-200' : 'bg-white';
+          return (
+            <div
+              key={i}
+              className={`absolute ${size} ${brightness} rounded-full animate-pulse`}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 5}s`,
+                animationDuration: `${1.5 + Math.random() * 4}s`,
+                opacity: 0.3 + Math.random() * 0.7,
+              }}
+            />
+          );
+        })}
+      </div>
       {/* Fondo con grid cyberpunk */}
-        <div className="fixed inset-0 cyber-grid opacity-20 dark:opacity-10" />
-      
+      <div className="fixed inset-0 cyber-grid opacity-20 dark:opacity-10" />
+
       {/* Pantalla de carga */}
       {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
-      
+
       {/* Toggle de tema */}
       {!isLoading && <ThemeToggle />}
-      
+
       {/* Contenido principal */}
       {showContent && (
         <motion.div
@@ -187,7 +173,21 @@ export default function Home() {
                 )}
               </motion.p>
             </div>
-            
+
+            <div className='flex justify-center mb-8'>
+              <ProfileCard
+                name="Dallin Miranda Tustón"
+                title="Software Engineer"
+                handle="DXM"
+                status="Online"
+                contactText="Contact Me"
+                avatarUrl="/images/me.webp"
+                showUserInfo={false}
+                enableTilt={true}
+                onContactClick={() => console.log('Contact clicked')}
+              />
+            </div>
+
             <TechSlider />
           </motion.section>
 
@@ -198,24 +198,36 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-fr">
-              {/* Sección About */}
-              <AboutSection />
-              
-              {/* Proyectos */}
-              {projects.map((project, index) => (
-                <motion.div
-                  key={project.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                >
-                  <ProjectCard {...project} />
-                </motion.div>
-              ))}
-              
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              {/* Primera fila: About y CV */}
+              <div className="md:col-span-3">
+                <AboutSection />
+              </div>
+              <div className="md:col-span-1">
+                <ResumeSection />
+              </div>
+
+              {/* Proyectos en filas de 3 */}
+              <div className="col-span-full grid grid-cols-1 md:grid-cols-3 gap-6">
+                {projects.map((project, index) => (
+                  <motion.div
+                    key={project.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                  >
+                    <ProjectCard
+                      {...project}
+                      onImageClick={(images) => setSliderImages(images)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+
               {/* Sección de contacto */}
-              <ContactSection />
+              <div className="col-span-full">
+                <ContactSection />
+              </div>
             </div>
           </motion.section>
 
@@ -233,7 +245,7 @@ export default function Home() {
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1, delay: 1.6 }}
               />
-              
+
               <motion.p
                 className="text-gray-400 text-sm"
                 animate={{
@@ -241,7 +253,7 @@ export default function Home() {
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
               >
-                © 2025 DXM Portfolio. Diseñado con 💜 y mucho café.
+                2025 DXM Portfolio. Diseñado con y mucho café.
               </motion.p>
             </div>
           </motion.footer>
@@ -271,6 +283,16 @@ export default function Home() {
               }}
             />
           ))}
+        </div>
+      )}
+
+      {/* Render the ImageSlider at the top level when active */}
+      {sliderImages && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-lg flex items-center justify-center">
+          <ImageSlider
+            images={sliderImages}
+            onClose={() => setSliderImages(null)}
+          />
         </div>
       )}
     </main>

@@ -7,20 +7,22 @@ interface ProjectCardProps {
   title: string
   description: string
   technologies: string[]
-  imageUrl?: string
+  images?: string[]
   demoUrl?: string
   githubUrl?: string
   size?: 'small' | 'medium' | 'large'
+  onImageClick?: (images: string[]) => void
 }
 
 export default function ProjectCard({
   title,
   description,
   technologies,
-  imageUrl,
+  images,
   demoUrl,
   githubUrl,
-  size = 'medium'
+  size = 'medium',
+  onImageClick
 }: ProjectCardProps) {
   const sizeClasses = {
     small: 'col-span-1 row-span-1',
@@ -54,9 +56,14 @@ export default function ProjectCard({
 
       <div className="relative z-10 h-full flex flex-col">
         {/* Imagen del proyecto */}
-        {imageUrl && (
+        {images && images.length > 0 && (
           <div className="w-full h-32 mb-4 rounded-lg overflow-hidden bg-gradient-to-br from-purple-900 to-cyan-900 flex items-center justify-center">
-            <div className="text-4xl opacity-50">🚀</div>
+            <img 
+              src={images[0]} 
+              alt={title} 
+              className="w-full h-full object-cover cursor-pointer"
+              onClick={() => onImageClick && onImageClick(images)}
+            />
           </div>
         )}
 
@@ -88,56 +95,34 @@ export default function ProjectCard({
 
         {/* Enlaces */}
         <div className="flex gap-3 mt-auto">
-          {demoUrl && (
-            <motion.a
-              href={demoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-medium hover:from-purple-600 hover:to-pink-600 transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ExternalLink className="w-4 h-4" />
-              Demo
-            </motion.a>
-          )}
           {githubUrl && (
             <motion.a
               href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-600 text-gray-300 text-sm font-medium hover:bg-gray-700 transition-all duration-300"
+              className="px-3 py-2 rounded-full bg-gradient-to-r from-purple-600 to-cyan-600 text-white flex items-center gap-2 text-sm"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Github className="w-4 h-4" />
-              Code
+              <Github size={16} />
+              GitHub
+            </motion.a>
+          )}
+
+          {demoUrl && (
+            <motion.a
+              href={demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 py-2 rounded-full bg-gradient-to-r from-pink-600 to-purple-600 text-white flex items-center gap-2 text-sm"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ExternalLink size={16} />
+              Demo
             </motion.a>
           )}
         </div>
-      </div>
-
-      {/* Efecto de partículas en hover */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              delay: i * 0.2,
-            }}
-          />
-        ))}
       </div>
     </motion.div>
   )

@@ -14,8 +14,9 @@ Una Single Page Application desarrollada en Next.js con estética retrofuturista
 - Layout Bento con cajas organizadas
 - Bordes brillantes estilo cyberpunk con efectos CSS modernos
 - Toggle de tema claro/oscuro siempre visible
-- Logo slider con inclinación y tecnologías
+- Logo slider con inclinación y tecnologías, ahora con iconos más grandes y animación más lenta
 - Efectos de neón, gradientes y partículas animadas
+- **Image Slider** como modal a pantalla completa con animaciones y navegación por teclado.
 
 ### 🛠️ Tecnologías Utilizadas
 - **Next.js 14** con App Router
@@ -25,6 +26,12 @@ Una Single Page Application desarrollada en Next.js con estética retrofuturista
 - **Framer Motion** para animaciones fluidas
 - GSAP para animaciones avanzadas
 - Lucide React para iconos
+- **HTML5, CSS3, JavaScript**
+- **Node.js, Java, PHP, Python**
+- **Android, Kotlin, Flutter**
+- **MySQL, MongoDB, Firebase**
+- **Git, GitHub, Nginx, Docker, VS Code, Postman**
+- **Figma, Adobe XD**
 
 ## 🚀 Instalación y Uso
 
@@ -76,9 +83,10 @@ portafolio/
 │   │   ├── ThemeToggle.tsx        # Toggle de tema claro/oscuro
 │   │   ├── TechSlider.tsx         # Slider de tecnologías
 │   │   ├── ProjectCard.tsx        # Tarjetas de proyectos
-│   │   ├── AboutSection.tsx       # Sección de presentación
-│   │   ├── ContactSection.tsx     # Sección de contacto
-│   │   └── ThemeProvider.tsx      # Proveedor de contexto de tema
+   │   ├── ResumeSection.tsx      # Sección de descarga de CV
+   │   ├── AboutSection.tsx       # Sección de presentación
+   │   ├── ContactSection.tsx     # Sección de contacto
+   │   └── ThemeProvider.tsx      # Proveedor de contexto de tema
 │   ├── globals.css                # Estilos globales y efectos CSS
 │   ├── layout.tsx                 # Layout principal
 │   └── page.tsx                   # Página principal
@@ -136,8 +144,8 @@ Sistema de temas con:
 ### TechSlider
 Slider de tecnologías con:
 - Logos de las tecnologías
-- Animación de loop infinito y continuo
-- Efectos de hover mejorados con rotación y escala
+- Animación de loop infinito y continuo, ahora más lenta
+- Efectos de hover mejorados con rotación y escala, y iconos más grandes
 
 ## 🔧 Personalización
 
@@ -197,6 +205,10 @@ CMD ["npm", "start"]
 ```
 
 ## 🤝 Contribuciones
+
+## 🌟 Agradecimientos
+
+Un agradecimiento especial a los creadores de las librerías y herramientas de código abierto que hicieron posible este proyecto. Su trabajo es invaluable para la comunidad de desarrolladores.
 
 1. Fork el proyecto
 2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)

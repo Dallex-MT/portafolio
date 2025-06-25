@@ -95,7 +95,7 @@ export default function ContactSection() {
         </div>
 
         {/* Formulario de contacto */}
-        <motion.form
+        {/* <motion.form
           onSubmit={handleSubmit}
           className="space-y-4"
           initial={{ opacity: 0, y: 20 }}
@@ -158,7 +158,7 @@ export default function ContactSection() {
             <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             Enviar Mensaje
           </motion.button>
-        </motion.form>
+        </motion.form> */}
       </div>
 
       {/* Partículas decorativas */}
